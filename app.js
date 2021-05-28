@@ -12,32 +12,35 @@ class UI {
     addBookToList(book){
         const tbody = document.querySelector(".display-book");
         const newRow = document.createElement("tr");
+        const btnDelete = document.createElement("td");
 
-        newRow.className = "newRow"
+        newRow.className = "newRow";
+        btnDelete.className = "btn-hapus";
 
         newRow.innerHTML = `
             <td>${book.title}</td>
             <td>${book.author}</td>
             <td>${book.code}</td>
-            <td class = "hapus">X</td>
-            
-        `
-        tbody.appendChild(newRow);
+        `;
+        btnDelete.innerHTML= "X";
 
-        console.log(newRow)
+        btnDelete.addEventListener("click", function(e) {
+            const element = e.target;
+            element.parentElement.remove();
+        });
+        
+        newRow.appendChild(btnDelete);
+        tbody.appendChild(newRow);
     }
 
     clearInput(){
-        document.querySelector(".title").value = ""
-        document.querySelector(".author").value = ""
-        document.querySelector(".code").value = ""
-
+        document.getElementById("form-input-book").reset();
     }
 
 }
 
 
-document.querySelector(".submit").addEventListener("submit", function(e){
+document.querySelector("#form-input-book").addEventListener("submit", function(e) {
     const title = document.querySelector(".title").value;
     const author = document.querySelector(".author").value;
     const code = document.querySelector(".code").value;
@@ -57,12 +60,10 @@ document.querySelector(".submit").addEventListener("submit", function(e){
 
         ui.addBookToList(book);
 
-        ui.clearInput()
+        ui.clearInput();
     }
 
-    e.preventDefault()  
-
-
+    e.preventDefault();  
 
 })
 
